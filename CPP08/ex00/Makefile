@@ -1,4 +1,4 @@
-NAME = iterator
+NAME = array
 
 SRC = src/main.cpp
 

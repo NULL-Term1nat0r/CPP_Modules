@@ -35,17 +35,24 @@ void Span::addNumber(int n) {
 }
 
 int Span::shortestSpan() {
-	if (this->_spanContainer.size() <= 1)
+	if (_spanContainer.size() <= 1)
 		throw Span::NoSpanException();
-	findNumbers();
-	return this->_secondSmallestNumber - this->_smallestNumber;
+	int shortest = INT_MAX;
+	std::vector<int> tmp_storage = _spanContainer;
+	std::sort(tmp_storage.begin(), tmp_storage.end());
+	for (std::vector<int>::const_iterator it = tmp_storage.begin(); it + 1 < tmp_storage.end(); it++) {
+		if (*(it + 1) - *it < shortest)
+			shortest = *(it + 1) - *it;
+	}
+	return shortest;
 }
 
 int Span::longestSpan(){
-	if (this->_spanContainer.size() <= 1)
+	if (_spanContainer.size() <= 1)
 		throw Span::NoSpanException();
-	findNumbers();
-	return _biggestNumber - _smallestNumber;
+	int min_element = *std::min_element(_spanContainer.begin(), _spanContainer.end());
+	int max_element = *std::max_element(_spanContainer.begin(), _spanContainer.end());
+	return max_element - min_element;
 }
 
 void Span::fillContainer(int n, int min, int max){
@@ -62,17 +69,11 @@ void Span::findNumbers(){
 	std::vector<int>::iterator it = this->_spanContainer.begin();
 	std::vector<int>::iterator end = this->_spanContainer.end();
 	_smallestNumber = *it;
-	_secondSmallestNumber = *it;
 	_biggestNumber = *it;
 	while (it != end)
 	{
 		if (*it < _smallestNumber)
-		{
-			_secondSmallestNumber = _smallestNumber;
 			_smallestNumber = *it;
-		}
-		else if (*it < _secondSmallestNumber)
-			_secondSmallestNumber = *it;
 		else if (*it > _biggestNumber)
 			_biggestNumber = *it;
 		it++;
@@ -87,8 +88,6 @@ void Span::printContainer(){
 	{
 		if (*it == this->_smallestNumber)
 			std::cout << green << *it << reset << " ";
-		else if (*it == this->_secondSmallestNumber)
-			std::cout << yellow << *it << reset << " ";
 		else if (*it == this->_biggestNumber)
 			std::cout << red << *it << reset << " ";
 		else
@@ -100,7 +99,6 @@ void Span::printContainer(){
 
 void Span::printNumbers() {
 	std::cout << "smallest number: " << this->_smallestNumber << std::endl;
-	std::cout << "second smallest number: " << this->_secondSmallestNumber << std::endl;
 	std::cout << "biggest number: " << this->_biggestNumber << std::endl;
 }
 

@@ -24,7 +24,6 @@ class Span {
 		unsigned int _spanLimit;
 		std::vector<int> _spanContainer;
 		int _smallestNumber;
-		int _secondSmallestNumber;
 		int _biggestNumber;
 	public:
 		Span(unsigned int n);

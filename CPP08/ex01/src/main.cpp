@@ -16,12 +16,13 @@
 int main (){
 	Span sp2 = Span(10000);
 	try {
-		Span sp1 = Span(6);
+		Span sp1 = Span(7);
 		std::cout << magenta << "-------------------TEST-1-(valid parameters)-----------------" << reset << std::endl;
 		sp1.addNumber(5);
 		sp1.addNumber(3);
-		sp1.addNumber(3);
+		sp1.addNumber(1);
 		sp1.addNumber(17);
+		sp1.addNumber(18);
 		sp1.addNumber(9);
 		sp1.addNumber(11);
 		sp1.printContainer();
