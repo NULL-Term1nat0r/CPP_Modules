@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ScalarConverter.cpp                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: estruckm <estruckm@student.42wolfsburg.de    +#+  +:+       +#+        */
+/*   By: estruckm <estruckm@student.42wolfsburg.de    +#+  +:+       +#+      */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/30 18:41:04 by estruckm           #+#    #+#             */
-/*   Updated: 2023/06/14 12:07:51 by estruckm          ###   ########.fr       */
+/*   Created: 2023/05/30 18:41:04 by estruckm           #+#    #+#            */
+/*   Updated: 2023/06/14 12:07:51 by estruckm          ###   ########.fr      */
 /*                                                                            */
 /* ************************************************************************** */
 
