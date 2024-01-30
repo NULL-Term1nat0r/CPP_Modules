@@ -20,15 +20,15 @@ PMergeList::PMergeList(char **argv){
 //	std::cout << blue << "after sort pairList: " << resetColor << std::endl;
 //	printPairList();
 	recursiveMergeSort(_pairList.begin(), _pairList.end(), 0);
-	std::cout << blue << "after recursiveMergeSort: " << resetColor << std::endl;
-	printPairList();
+//	std::cout << blue << "after recursiveMergeSort: " << resetColor << std::endl;
+//	printPairList();
 	initMainChain();
-	std::cout << blue << "after init mainList: " << resetColor << std::endl;
-	printMainList();
-	std::cout << blue << "--------------------: " << resetColor << std::endl;
+//	std::cout << blue << "after init mainList: " << resetColor << std::endl;
+//	printMainList();
+//	std::cout << blue << "--------------------: " << resetColor << std::endl;
 	insertIntoMainChain();
-	std::cout << blue << "after insert Ino Main Chain: " << resetColor << std::endl;
-	printMainList();
+//	std::cout << blue << "after insert Into Main Chain: " << resetColor << std::endl;
+//	printMainList();
 }
 
 PMergeList::~PMergeList(){}
@@ -46,20 +46,20 @@ void PMergeList::createPairs(char **argv){
 	int i;
 	for (i = 1; argv[i]; i++) {
 		if (argv[i + 1]) {
-			try {
-				if (Parsing::isValidNumber(argv[i]) && Parsing::isValidNumber(argv[i + 1]))
-					throw InvalidConversion();
+			if (Parsing::isValidNumber(argv[i]) && Parsing::isValidNumber(argv[i + 1]))
 				_pairList.push_back(std::make_pair(atoi(argv[i]), atoi(argv[i + 1])));
-				i++;
-			}
-			catch (std::exception &e) {
-				std::cout << red  << e.what() << resetColor << std::endl;
-			}
+			else
+				throw InvalidConversion();
+			i++;
 		}
 		else {
-			_listIsOdd = true;
-			_additionalValue = atoi(argv[i]);
-			std::cout << yellow << "Additional value: " << _additionalValue << resetColor << std::endl;
+			std::cout << "last value: " << argv[i] << std::endl;
+			if (Parsing::isValidNumber(argv[i])) {
+				_listIsOdd = true;
+				_additionalValue = atoi(argv[i]);
+			}
+			else
+				throw InvalidConversion();
 		}
 	}
 }
@@ -140,9 +140,9 @@ void	PMergeList::insertIntoMainChain()
 		while (jacobsthalNumbers[k] - j > jacobsthalNumbers[k - 1])
 		{
 			chain_delim_it = std::find(_mainChain.begin(), _mainChain.end(), pair_it->second); // is first auch möglich ?
-			std::cout << green << "value to be insert: " << pair_it->first << resetColor << std::endl;
+//			std::cout << green << "value to be insert: " << pair_it->first << resetColor << std::endl;
 			binarySearchInsertion(chain_delim_it, pair_it->first);
-			printMainList();
+//			printMainList();
 			pair_it--;
 			j++;
 		}
@@ -154,9 +154,9 @@ void	PMergeList::insertIntoMainChain()
 			pair_it--;
 		while (pair_it != last_jacob_it) {
 			chain_delim_it = std::find(_mainChain.begin(), _mainChain.end(), pair_it->second);
-			std::cout << green << "value to be insert: " << pair_it->first << resetColor << std::endl;
+//			std::cout << green << "value to be insert: " << pair_it->first << resetColor << std::endl;
 			binarySearchInsertion(chain_delim_it, pair_it->first);
-			printMainList();
+//			printMainList();
 			pair_it--;
 		}
 	}

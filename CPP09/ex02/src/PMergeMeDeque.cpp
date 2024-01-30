@@ -20,15 +20,15 @@ PMergeDeque::PMergeDeque(char **argv){
 //	std::cout << blue << "after sort pairList: " << resetColor << std::endl;
 //	printPairList();
 	recursiveMergeSort(_pairList.begin(), _pairList.end(), 0);
-	std::cout << blue << "after recursiveMergeSort: " << resetColor << std::endl;
-	printPairList();
+//	std::cout << blue << "after recursiveMergeSort: " << resetColor << std::endl;
+//	printPairList();
 	initMainChain();
-	std::cout << blue << "after init mainList: " << resetColor << std::endl;
-	printMainList();
-	std::cout << blue << "--------------------: " << resetColor << std::endl;
+//	std::cout << blue << "after init mainList: " << resetColor << std::endl;
+//	printMainList();
+//	std::cout << blue << "--------------------: " << resetColor << std::endl;
 	insertIntoMainChain();
-	std::cout << blue << "after insert Ino Main Chain: " << resetColor << std::endl;
-	printMainList();
+//	std::cout << blue << "after insert Into Main Chain: " << resetColor << std::endl;
+//	printMainList();
 }
 
 PMergeDeque::~PMergeDeque(){}
@@ -42,19 +42,20 @@ void PMergeDeque::createPairs(char **argv){
 	int i;
 	for (i = 1; argv[i]; i++) {
 		if (argv[i + 1]) {
-			try {
-				if (Parsing::isValidNumber(argv[i]) && Parsing::isValidNumber(argv[i + 1]))
-					_pairList.push_back(std::make_pair(atoi(argv[i]), atoi(argv[i + 1])));
-				i++;
-			}
-			catch (std::exception &e) {
-				std::cout << red  << e.what() << resetColor << std::endl;
-			}
+			if (Parsing::isValidNumber(argv[i]) && Parsing::isValidNumber(argv[i + 1]))
+				_pairList.push_back(std::make_pair(atoi(argv[i]), atoi(argv[i + 1])));
+			else
+				throw InvalidConversion();
+			i++;
 		}
 		else {
-			_listIsOdd = true;
-			_additionalValue = atoi(argv[i]);
-			std::cout << yellow << "Additional value: " << _additionalValue << resetColor << std::endl;
+			std::cout << "last value: " << argv[i] << std::endl;
+			if (Parsing::isValidNumber(argv[i])) {
+				_listIsOdd = true;
+				_additionalValue = atoi(argv[i]);
+			}
+			else
+				throw InvalidConversion();
 		}
 	}
 }
@@ -68,19 +69,21 @@ void PMergeDeque::sortPairs(){
 }
 
 void PMergeDeque::printPairList(){
+	std::cout << boldBackgroundCyan << "List: " << resetColor << std::endl;
 	for (std::deque<std::pair<int, int> >::iterator it = _pairList.begin(); it != _pairList.end(); it++)
 		std::cout << yellow << " " << it->first << " " << it->second << " ";
 	std::cout << resetColor << std::endl;
 }
 
 void PMergeDeque::printMainList(){
+	std::cout << boldBackgroundMagenta << "List: " << resetColor << std::endl;
 	for (std::deque<int>::iterator it = _mainChain.begin(); it != _mainChain.end(); it++)
 		std::cout << yellow << " " << *it << " ";
 	std::cout << resetColor << std::endl;
 }
 
 bool PMergeDeque::custom_cmp(std::pair<int, int> a, std::pair<int, int> b){
-	return a.first < b.first;
+	return a.second < b.second;
 }
 
 
@@ -88,7 +91,7 @@ bool PMergeDeque::custom_cmp(std::pair<int, int> a, std::pair<int, int> b){
 void PMergeDeque::recursiveMergeSort(std::deque< std::pair<int, int> >::iterator start, std::deque< std::pair<int, int> >::iterator end, size_t size){
 	if (size == 0)
 		size = _pairList.size();
-	if (size == 1)
+	if (size <= 1)
 		return;
 	size_t mid = size / 2;
 	std::deque< std::pair<int, int> >::iterator midIt = start;
@@ -102,7 +105,8 @@ void PMergeDeque::initMainChain(){
 	for (std::deque<std::pair<int, int> >::iterator it = _pairList.begin(); it != _pairList.end(); it++){
 		_mainChain.push_back(it->second);
 	}
-	_mainChain.push_front(_pairList.begin()->first);
+	if (!_pairList.empty())
+		_mainChain.push_front(_pairList.begin()->first);
 }
 
 void PMergeDeque::binarySearchInsertion(std::deque<int>::iterator end, int val){
@@ -126,9 +130,9 @@ void PMergeDeque::insertIntoMainChain(){
 		while (jacobsthalNumbers[k] - j > jacobsthalNumbers[k - 1])
 		{
 			chain_delim_it = std::find(_mainChain.begin(), _mainChain.end(), pair_it->second); // is first auch möglich ?
-			std::cout << green << "value to be insert: " << pair_it->first << resetColor << std::endl;
+//			std::cout << green << "value to be insert: " << pair_it->first << resetColor << std::endl;
 			binarySearchInsertion(chain_delim_it, pair_it->first);
-			printMainList();
+//			printMainList();
 			pair_it--;
 			j++;
 		}
@@ -140,9 +144,9 @@ void PMergeDeque::insertIntoMainChain(){
 			pair_it--;
 		while (pair_it != last_jacob_it) {
 			chain_delim_it = std::find(_mainChain.begin(), _mainChain.end(), pair_it->second);
-			std::cout << green << "value to be insert: " << pair_it->first << resetColor << std::endl;
+//			std::cout << green << "value to be insert: " << pair_it->first << resetColor << std::endl;
 			binarySearchInsertion(chain_delim_it, pair_it->first);
-			printMainList();
+//			printMainList();
 			pair_it--;
 		}
 	}

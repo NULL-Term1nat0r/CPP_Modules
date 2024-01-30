@@ -1,4 +1,4 @@
-NAME = ford
+NAME = PMergeMe
 
 SRC = 	src/PMergeMeList.cpp \
 		src/PMergeMeDeque.cpp \
